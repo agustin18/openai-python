@@ -1,5 +1,30 @@
 # Changelog
 
+## [3.20.0](https://github.com/openai/openai-python/compare/v3.19.2...v3.20.0) (2026-09-27)
+
+
+### Features
+
+* **api:** add Agents credential and session options ([#3967](https://github.com/openai/openai-python/issues/3967)) ([bb68198](https://github.com/openai/openai-python/commit/bb68198a4bb4a161cbb32a28c3888a51540eaf0f))
+* **api:** add Cyber access programs to Responses ([#3956](https://github.com/openai/openai-python/issues/3956)) ([09c5b6f](https://github.com/openai/openai-python/commit/09c5b6f13f716ad4e417fd7ba9209a8a057e0383))
+
+
+### Bug Fixes
+
+* **live:** avoid hangs at fractional transcript grouping deadlines ([#3970](https://github.com/openai/openai-python/issues/3970)) ([4ef4129](https://github.com/openai/openai-python/commit/4ef4129e85e81a285905755e57b392aa9e77f9bd))
+* **live:** keep query parameters out of WebSocket endpoint paths ([#3972](https://github.com/openai/openai-python/issues/3972)) ([f9c458b](https://github.com/openai/openai-python/commit/f9c458b759e3756979fceebf50bffa78d9cf0b97))
+* **realtime:** preserve base URL queries in WebSocket upgrades ([#3971](https://github.com/openai/openai-python/issues/3971)) ([f7bd4a7](https://github.com/openai/openai-python/commit/f7bd4a703cad904e4f5d91ec9d7abac70d8c0bd6))
+
+
+### Chores
+
+* **api:** clarify documented API error responses ([#3965](https://github.com/openai/openai-python/issues/3965)) ([384fee3](https://github.com/openai/openai-python/commit/384fee3252e2336a85450ff38f9bae41f9199616))
+* **api:** document batch error responses ([#3961](https://github.com/openai/openai-python/issues/3961)) ([6e4a79c](https://github.com/openai/openai-python/commit/6e4a79cc8c7e640e7ac4be710db32fe20b1020f2))
+* **api:** document files and uploads error responses ([#3960](https://github.com/openai/openai-python/issues/3960)) ([a9d727f](https://github.com/openai/openai-python/commit/a9d727ff9c4a38fc5dca8d31bd3dd76f473cfc27))
+* **api:** document fine-tuning and model errors ([#3964](https://github.com/openai/openai-python/issues/3964)) ([5d4003c](https://github.com/openai/openai-python/commit/5d4003c12d5df5a5faed35971cac3bcb711fdf7d))
+* **api:** document Responses not-found errors ([#3959](https://github.com/openai/openai-python/issues/3959)) ([63099e7](https://github.com/openai/openai-python/commit/63099e739d25cb18f90cae93648471bf037bc46f))
+* **api:** document stored chat completion errors ([#3963](https://github.com/openai/openai-python/issues/3963)) ([a73fe0c](https://github.com/openai/openai-python/commit/a73fe0c3d404335a342d1251bd32709b8e3d76f2))
+
 ## [3.19.2](https://github.com/openai/openai-python/compare/v3.19.1...v3.19.2) (2026-09-23)
 
 
