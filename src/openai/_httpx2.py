@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import ssl
 import sys
 from typing import Any, Protocol, cast
 
@@ -100,9 +101,10 @@ def timeout_exceptions() -> tuple[type[httpx2.TimeoutException], ...]:
     return (httpx2.TimeoutException,) if module is None else (httpx2.TimeoutException, module.TimeoutException)
 
 
-def request_exceptions() -> tuple[type[httpx2.RequestError], ...]:
+def request_exceptions() -> tuple[type[httpx2.RequestError | ssl.SSLError], ...]:
     module = _loaded_legacy_httpx()
-    return (httpx2.RequestError,) if module is None else (httpx2.RequestError, module.RequestError)
+    base: tuple[type[httpx2.RequestError | ssl.SSLError], ...] = (httpx2.RequestError, ssl.SSLError)
+    return base if module is None else (*base, module.RequestError)
 
 
 def status_exceptions() -> tuple[type[httpx2.HTTPStatusError], ...]:

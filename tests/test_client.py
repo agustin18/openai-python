@@ -3,6 +3,7 @@ from __future__ import annotations
 import gc
 import io
 import os
+import ssl
 import sys
 import json
 import math
@@ -3622,6 +3623,43 @@ async def test_application_exceptions_are_not_retried(is_async: bool, error: Bas
                 client.get("/test", cast_to=object)
         assert caught.value is error
         assert calls == 1
+    finally:
+        if isinstance(client, AsyncOpenAI):
+            await client.close()
+        else:
+            client.close()
+
+
+@pytest.mark.parametrize("is_async", [False, True])
+@pytest.mark.parametrize(
+    "error",
+    [
+        ssl.SSLError(1, "[SSL: SSLV3_ALERT_BAD_RECORD_MAC] ssl/tls alert bad record mac"),
+        ssl.SSLEOFError(8, "EOF occurred in violation of protocol"),
+    ],
+)
+async def test_ssl_error_is_retried_and_wrapped(is_async: bool, error: ssl.SSLError) -> None:
+    calls = 0
+
+    def handler(_request: httpx2.Request) -> httpx2.Response:
+        nonlocal calls
+        calls += 1
+        raise error
+
+    transport = httpx2.MockTransport(handler)
+    client = (
+        AsyncOpenAI(api_key="fake-key", max_retries=2, http_client=httpx2.AsyncClient(transport=transport))
+        if is_async
+        else OpenAI(api_key="fake-key", max_retries=2, http_client=httpx2.Client(transport=transport))
+    )
+    try:
+        with pytest.raises(APIConnectionError) as exc_info:
+            if isinstance(client, AsyncOpenAI):
+                await client.get("/test", cast_to=object)
+            else:
+                client.get("/test", cast_to=object)
+        assert exc_info.value.__cause__ is error
+        assert calls == 3
     finally:
         if isinstance(client, AsyncOpenAI):
             await client.close()
